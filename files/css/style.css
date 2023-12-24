@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roboto, sans-serif;
+}
+body {
+    min-height: 100vh; 
+    background-color: #eee;
+}
+
+header {
+    background-color: #0d6efd;
+    padding: 0.5em;
+    color: #fff;
+    height: 70px;
+}
+
+header .brand {
+    font: Bold 2em / 1.5 Cairo
+}
+
+header a {
+    text-decoration: none;
+    color: inherit
+}
+
+header nav a:not(.active) {
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    margin: 1em 6px;
+    padding: 5px 1em;
+    background-color: #fff;
+    color: #0d6efd !important;
+}
+
+header nav a.active {
+    padding: 5px 1em;
+    color: #fff;
+    border: 1px solid transparent;
+    background-color: transparent;
+}
+header nav a.active:hover {
+    border: 1px solid #fff;
+}
+
+header nav a.hidden {
+    display: none;
+}
+
+header nav ul {
+    height: 0;
+    overflow: hidden;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+}
+
+.header-contents {
+    display: flex;
+    justify-content: space-between;
+}
+section.form-content  {
+    
+    position: relative;
+}
+.form-container {
+    border: 1px solid #0d6efd;
+    position: absolute;
+    left: 50%;
+    top: 40vh;
+    transform: translate(-50%, -50%);
+    width: 500px;
+}
+.form-container h3 {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+input.form-control,
+select.form-control,
+textarea, label.input-group-text {
+    border: 1px solid #0d6efd;;
+    border-radius: 1em
+}
+
+input.form-check-input {
+    border: 1px solid #0d6efd
+}
+
+label.input-group-text,
+label.form-check-label {
+    color: #0d6efd;;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    box-shadow: none !important;
+}
+
+::-moz-placeholder,
+::placeholder {
+    color: rgba(2, 82, 78, 0.226) !important;
+}
