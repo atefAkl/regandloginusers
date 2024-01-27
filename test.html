@@ -1,0 +1,89 @@
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button" 
+        type="button" data-bs-toggle="collapse" 
+        data-bs-target="#collapseOne" aria-expanded="true" 
+        aria-controls="collapseOne">
+          Accordion Item #1
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Accordion Item #2
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Accordion Item #3
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    menues.forEach((menu) => {
+                let btn = document.createElement ('BUTTON');                    // Button
+                btn.className = 'accordion-button'+ menu.id !=1? ' collaped': '';
+                
+                btn.setAttribute('type', 'button');
+                btn.setAttribute('data-bs-toggle', 'collapse');
+                btn.setAttribute('data-bs-target', '#collapse_' + menu.id);
+                btn.setAttribute('area-controls', 'collapse_' + menu.id);
+                btn.setAttribute('aria-expanded', menu.id==1?'true':'false');
+                btn.innerText = menu.name;                                      //Button text
+                let h2 = document.createElement('H2');                          //h2
+                h2.className = 'accordion-header';
+                h2.appendChild(btn);
+                let accItem = document.createElement('DIV');                    // div.accordion-item h2 button {text} 
+                accItem.className= 'accordion-item';
+                accItem.appendChild(h2);
+                //====================================================================================
+                let accCollapse = document.createElement ('DIV'); 
+                accCollapse.className = 'accordion-collapse', 'collapse'+ menu.id == 1 ? ' show':'';
+                accCollapse.setAttribute('data-bs-parent', '#sideBarLinks');
+                accCollapse.setAttribute('id', 'collapse_'+menu.id);
+                let accBody = document.createElement('OL')
+                accBody.className='accordion-body'
+                menu.submenues.forEach((submenu)=>{
+                    let link = document.createElement('A')
+                    link.setAttribute('class', 'submenu-item-link')
+                    link.setAttribute('href', '/app/products/show.html?productid='+submenu.id)
+                    let linkItem = document.createElement('LI')
+                    linkItem.className = 'submenu-item';
+                    link.innerHTML=submenu.name
+                    linkItem.appendChild(link)
+                    accBody.appendChild(linkItem)
+                })
+                accItem.appendChild(accCollapse);
+                accCollapse.appendChild(accBody)
+                getById('accordionFlushExample').appendChild(accItem)
+
+            })
+
+            function createMenuItem (menu) {
+                let mi = document.createElement('LI')
+                mi.className = 'menuItem'
+                mi.setAttribute('data-id', menu.id)
+                mi.innerHTML=menu.name
+                return mi
+            }
+  </script>

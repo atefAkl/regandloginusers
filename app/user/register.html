@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="../../files/images/logo.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../../files/css/all.css">
+    <link rel="stylesheet" href="../../files/css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <div id="preloading">
+        <img src="/files/images/preload.webp" alt="">
+    </div>
+    <div class="topHeader py-1"></div>
+    <header id="mainHeader"></header>
+    <section class="form-section">
+        <form name="registerForm">
+            <h1 class="py-1">
+                <a href="/index.html">
+                    <img class="logo" src="../../files/images/logo.png" alt="application logo">
+                    Cart CRUD App
+                </a>
+            </h1>
+            <div class="titles d-flex">
+                <a href="/index.html"><i class="fas fa-home"></i></i></a>
+                <h1 class="register border">
+                  <span>Register</span>
+                </h1>
+                <h1 class="login border">
+                  <span><a href="login.html">Login</a></span>
+                </h1>
+              </div>
+
+            <div class="inputs">
+                <div class="input-group required">
+                    <label for="userName" class="input-group-text">User Name:</label>
+                    <input type="text" class="form-control mb-2" name="userName" id="userName" placeholder="Type User Name ...... ">
+                </div>
+                <div class="input-group required">
+                    <label for="email" class="input-group-text">Email:</label>
+                    <input type="text" class="form-control mb-2" name="email" id="email" placeholder="Type valid email ...... ">
+                </div>
+                <div class="input-group required">
+                    <label for="password" class="input-group-text">Password:</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Confirm password">
+                    <!-- <input type="password" class="form-control mb-2" name="password" id="password" placeholder="Type password ...... "> -->
+                </div>
+                <div class="input-group required">
+                    <label for="confirmpassword" class="input-group-text">Confirm Pas:</label>
+                    <input type="password" class="form-control mb-2" name="cPassword" id="confirmpassword" placeholder="confirm password ...... ">
+                </div>
+                
+                <input type="submit" class="form-control" name="registerBtn" id="register" value="Register">
+            
+                <p>already have accout? <a href="login.html">Login</a></p>
+            </div>
+        </form>
+        <div id="errors">
+    
+        </div>
+    </section>
+    <section id="userExistsError" class="userExists">
+        <div class="card text-danger">
+            <div class="card-header p-0 bg-secondary">
+                <h3 class="px-4 bg-danger text-white py-2 m-0">User Exists</h3>
+            </div>
+            <div class="card-body">
+                <h2 class="fs-5">   The following mistakes happened:</h2>
+                <p>May be the User name <em id="foundUserName"></em> or the email <em id="foundEmail"></em> is already in use by somebody else</p>
+                <p>If this is your name or you own this email, you can <a href="./login.html">login</a>. <br>
+                    Or you might forgot your credintials, so you can <a href="./resetpassword.html"> reset your password </a>. <br>
+                    Else, try another username or email.</p>
+                <a class="btn btn-secondary master" href="" onclick="(e)=>e.preventDefault()">Close</a>
+                <a class="btn btn-secondary master" href="./resetpassword.html">Reset Password</a>
+                <a class="btn btn-secondary master" href="./register.html">Use another email</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    
+    <script src="/files/js/app.js"></script>
+    <script src="/files/js/user.js"></script>
+    <script src="/files/js/script.js"></script>
+    <script type="text/javascript">
+        
+        window.addEventListener('load', function () {
+            getById('preloading').remove();
+            //check if there's a user session recorded
+            let su = sessionStorage.getItem ('cUser')
+            if (su) {
+                //if su [session user] is null? the user will be retrned to home page
+                window.location.href = '/ined.html'
+            } 
+
+            let form = getByName('registerForm')
+            let formInputs = {
+                userName: getById('userName'), 
+                email: getById('email'), 
+                password: getById('password'), 
+                cPassword: getById('confirmpassword')
+            }
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                submitUser(formInputs)
+            })
+        })
+
+        function submitUser (fs) {
+            
+            if(validateInputs(fs).length == 0) {
+                if (userExists(fs)) {
+                    showUserExistsError(fs)
+                    console.log('I found reg user')
+                } else {
+                    console.log('I found no reg user')
+                   if (saveUser (fs)) {
+                    console.log('problem saving user')
+                        setTimeout(function() {window.location.href = './login.html'}, 1800)
+                   }                    
+                }
+            } 
+        }
+  
+            //     const lowerCase = /[a-z]/;
+            //     const upperCase = /[A-Z]/;
+            //     const digit = /[0-9]/;
+            //     const symbol = /[!@#$%^&*()_+~`{}|:;'"<>?,.]/;
+            //     if (password.value.length < 8 || password.value.length > 32) {password.hasErrors++;errors.push('Password valid length is between 4 and 16 chars.')}
+            //     if (!lowerCase.test(password.value)) {password.hasErrors++;errors.push('Password must contain at least one lower-case char.')}
+            //     if (!upperCase.test(password.value)) {password.hasErrors++;errors.push('Password must contain at least one upper-case char.')}
+            //     if (!digit.test(password.value)) {password.hasErrors++;errors.push('Password must contain at least one number.')}
+            //     if (!symbol.test(password.value)) {password.hasErrors++;errors.push('Password must contain at least one symbol char.')}
+            // }
+    </script>
+</body>
+</html>
